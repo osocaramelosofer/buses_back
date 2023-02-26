@@ -3,10 +3,11 @@ from django.db import models
 
 class Route(models.Model):
     name = models.CharField(max_length=200)
+    origin = models.FloatField()
     duration = models.FloatField()
     destination = models.CharField(max_length=100)
-    date_departure = models.DateTimeField()
-    date_arrival = models.DateTimeField()
+    departure_date = models.DateTimeField()
+    arrival_date = models.DateTimeField()
 
     def __str__(self):
         return self.name
@@ -37,11 +38,11 @@ class BusAssignment(models.Model):
     driver = models.ForeignKey(
         Driver, on_delete=models.CASCADE, related_name="bus_assignment"
     )
-    date_departure = models.DateTimeField()
-    date_arrival = models.DateTimeField()
+    departure_date = models.DateTimeField()
+    arrival_date = models.DateTimeField()
 
     def __str__(self):
-        return f"{self.route.name} - {self.bus.serial_number} - {self.schedule}"
+        return f"{self.route.name} - {self.bus.serial_number}"
 
 
 class Passenger(models.Model):
