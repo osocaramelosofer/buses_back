@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import Bus, Route, ScheduleAssigment
+from ..models import Bus, BusAssignment, Route
 
 
 class RouteSerializer(serializers.ModelSerializer):
@@ -22,5 +22,5 @@ class ScheduleAssigmentSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = ScheduleAssigment
+        model = BusAssignment
         fields = ["id", "route", "route_name", "bus", "bus_serial_number", "schedule"]

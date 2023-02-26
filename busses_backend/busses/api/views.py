@@ -1,6 +1,6 @@
 from rest_framework import generics
 
-from ..models import Bus, Route, ScheduleAssigment
+from ..models import Bus, BusAssignment, Route
 from .serializers import BusSerializer, RouteSerializer, ScheduleAssigmentSerializer
 
 
@@ -25,10 +25,10 @@ class BusDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ScheduleAssigmentList(generics.ListCreateAPIView):
-    queryset = ScheduleAssigment.objects.all()
+    queryset = BusAssignment.objects.all()
     serializer_class = ScheduleAssigmentSerializer
 
 
 class ScheduleAssigmentDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ScheduleAssigment.objects.all()
+    queryset = BusAssignment.objects.all()
     serializer_class = ScheduleAssigmentSerializer
