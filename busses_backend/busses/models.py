@@ -6,7 +6,7 @@ class Trayecto(models.Model):
     destino = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"{self.origen - self.destino}"
+        return f"{self.origen} - {self.destino}"
 
 
 class Bus(models.Model):
@@ -27,19 +27,41 @@ class Chofer(models.Model):
         return f"{self.nombre}"
 
 
-# class Pasajero(models.Model):
-#     nombre = models.CharField(max_length=100)
-#     horario = models.ForeignKey('Horario', on_delete=models.CASCADE)
-#     asiento = models.OneToOneField('Asiento', on_delete=models.CASCADE)
-#
-#
-# class Asiento(models.Model):
-#     numero = models.PositiveSmallIntegerField(unique=True)
-#     estado = models.CharField(max_length=20)
-#
-#
-class Horario(models.Model):
+class Boleto(models.Model):
+    pasajero = models.OneToOneField("Pasajero", on_delete=models.CASCADE)
+    asiento = models.OneToOneField("Asiento", on_delete=models.CASCADE)
+    # bus = models.ForeignKey('Bus', on_delete=models.CASCADE) no lo necesitas aqui
+    corrida = models.ForeignKey("Corrida", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Asiento: {self.asiento} | pasajero:{self.pasajero.nombre}"
+
+
+class Pasajero(models.Model):
+    nombre = models.CharField(max_length=100)
+    asiento = models.SmallIntegerField(
+        default=None, blank=True, null=True
+    )  # Posiblemenete se borre
+    corrida = models.ForeignKey(
+        "Corrida", on_delete=models.CASCADE
+    )  # posiblemente se borre
+
+    def __str__(self):
+        return f"{self.nombre} - {self.asiento} - {self.corrida}"
+
+
+class Asiento(models.Model):
+    numero = models.PositiveSmallIntegerField(unique=True)
+    estado = models.CharField(max_length=20)
+    bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
+
+
+class Corrida(models.Model):
     fecha_salida = models.DateTimeField()
     fecha_llegada = models.DateTimeField()
     trayecto = models.ForeignKey(Trayecto, on_delete=models.CASCADE)
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
+    # capacidad = models.SmallIntegerField(default=0)
+
+    def __str__(self):
+        return f"Trayecto:{self.trayecto} | Bus info: {self.bus}"

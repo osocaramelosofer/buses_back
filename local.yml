@@ -34,6 +34,8 @@ services:
       - busses_backend_local_postgres_data_backups:/backups
     env_file:
       - ./.envs/.local/.postgres
+    ports:
+      - "54320:5432"
 
   docs:
     image: busses_backend_local_docs
