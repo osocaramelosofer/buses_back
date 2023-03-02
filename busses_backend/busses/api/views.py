@@ -1,34 +1,19 @@
-from rest_framework import generics
+from rest_framework import generics, viewsets
 
-from ..models import Bus, BusAssignment, Route
-from .serializers import BusSerializer, RouteSerializer, ScheduleAssigmentSerializer
-
-
-class RouteList(generics.ListCreateAPIView):
-    queryset = Route.objects.all()
-    serializer_class = RouteSerializer
+from ..models import Bus, Chofer, Trayecto
+from .serializers import BusSerializer, ChoferSerializer, TrayectoSerializer
 
 
-class RouteDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Route.objects.all()
-    serializer_class = RouteSerializer
+class TrayectoModelViewSet(viewsets.ModelViewSet):
+    queryset = Trayecto.objects.all()
+    serializer_class = TrayectoSerializer
 
 
-class BusList(generics.ListCreateAPIView):
+class ChoferModelViewSet(viewsets.ModelViewSet):
+    queryset = Chofer.objects.all()
+    serializer_class = ChoferSerializer
+
+
+class BusModelViewSet(viewsets.ModelViewSet):
     queryset = Bus.objects.all()
     serializer_class = BusSerializer
-
-
-class BusDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Bus.objects.all()
-    serializer_class = BusSerializer
-
-
-class ScheduleAssigmentList(generics.ListCreateAPIView):
-    queryset = BusAssignment.objects.all()
-    serializer_class = ScheduleAssigmentSerializer
-
-
-class ScheduleAssigmentDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = BusAssignment.objects.all()
-    serializer_class = ScheduleAssigmentSerializer

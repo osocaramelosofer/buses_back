@@ -1,7 +1,12 @@
 from django.conf import settings
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
-from busses_backend.busses.urls import urlpatterns as busurls
+from busses_backend.busses.api.views import (
+    BusModelViewSet,
+    ChoferModelViewSet,
+    TrayectoModelViewSet,
+)
+# from busses_backend.busses.urls import urlpatterns as busurls
 from busses_backend.users.api.views import UserViewSet
 
 if settings.DEBUG:
@@ -10,8 +15,10 @@ else:
     router = SimpleRouter()
 
 router.register("users", UserViewSet)
-
+router.register("trayectos", TrayectoModelViewSet)
+router.register("chofers", ChoferModelViewSet)
+router.register("buses", BusModelViewSet)
 
 app_name = "api"
 urlpatterns = router.urls
-urlpatterns += busurls
+# urlpatterns += busurls
