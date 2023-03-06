@@ -39,19 +39,13 @@ class Boleto(models.Model):
 
 class Pasajero(models.Model):
     nombre = models.CharField(max_length=100)
-    asiento = models.SmallIntegerField(
-        default=None, blank=True, null=True
-    )  # Posiblemenete se borre
-    corrida = models.ForeignKey(
-        "Corrida", on_delete=models.CASCADE
-    )  # posiblemente se borre
 
     def __str__(self):
-        return f"{self.nombre} - {self.asiento} - {self.corrida}"
+        return f"{self.nombre} "
 
 
 class Asiento(models.Model):
-    numero = models.PositiveSmallIntegerField(unique=True)
+    numero = models.PositiveSmallIntegerField()
     estado = models.CharField(max_length=20)
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
 

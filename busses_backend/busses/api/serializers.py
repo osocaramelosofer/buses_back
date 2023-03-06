@@ -1,13 +1,18 @@
+from django.db import DatabaseError, transaction
 from rest_framework import serializers
 
-from ..models import Bus, Chofer, Trayecto
+from ..models import Asiento, Bus, Chofer, Pasajero, Trayecto
 
-# class PassengerSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Passenger
-#         fields = ["name", "seat_number"]
-#
-#
+
+class PasajeroSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pasajero
+        fields = ["nombre"]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["id"] = instance.id
+        return data
 
 
 class ChoferSerializer(serializers.ModelSerializer):
@@ -26,6 +31,11 @@ class TrayectoSerializer(serializers.ModelSerializer):
         model = Trayecto
         fields = ["origen", "destino"]
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["id"] = instance.id
+        return data
+
 
 class BusSerializer(serializers.ModelSerializer):
     chofer = ChoferSerializer()
@@ -33,6 +43,11 @@ class BusSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bus
         fields = ["numero_placa", "chofer", "capacidad"]
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data["id"] = instance.id
+        return data
 
     def create(self, validated_data):
         chofer = validated_data.pop("chofer")
@@ -44,7 +59,34 @@ class BusSerializer(serializers.ModelSerializer):
             bus_instance.chofer = chofer_instance
             bus_instance.save()
 
+        # Create seats
+        print("======= Creating seats =======")
+        seats = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        seatsSerialized = []
+        try:
+            with transaction.atomic():
+                print("======= Before for =======")
+                for seat_number in seats:
+                    print("======= Inside for =======")
+                    seat_instance = Asiento.objects.create(
+                        bus=bus_instance, numero=seat_number, estado="disponible"
+                    )
+                    print(
+                        "======= Seat Created =======",
+                        AsientoSerializer(seat_instance).data,
+                    )
+                    seatsSerialized.append(AsientoSerializer(seat_instance).data)
+
+        except DatabaseError as err:
+            print(err)
+
         return bus_instance
+
+
+class AsientoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Asiento
+        fields = ["bus", "numero", "estado"]
 
 
 # class RouteSerializer(serializers.ModelSerializer):

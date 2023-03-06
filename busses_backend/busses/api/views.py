@@ -1,8 +1,14 @@
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
-from ..models import Bus, Chofer, Trayecto
-from .serializers import BusSerializer, ChoferSerializer, TrayectoSerializer
+from ..models import Asiento, Bus, Chofer, Pasajero, Trayecto
+from .serializers import (
+    AsientoSerializer,
+    BusSerializer,
+    ChoferSerializer,
+    PasajeroSerializer,
+    TrayectoSerializer,
+)
 
 
 class TrayectoModelViewSet(viewsets.ModelViewSet):
@@ -24,3 +30,13 @@ class ChoferModelViewSet(viewsets.ModelViewSet):
 class BusModelViewSet(viewsets.ModelViewSet):
     queryset = Bus.objects.all()
     serializer_class = BusSerializer
+
+
+class PasajeroModelViewSet(viewsets.ModelViewSet):
+    queryset = Pasajero.objects.all()
+    serializer_class = PasajeroSerializer
+
+
+class AsientoModelViewSet(viewsets.ModelViewSet):
+    queryset = Asiento.objects.all()
+    serializer_class = AsientoSerializer

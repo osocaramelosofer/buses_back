@@ -2,8 +2,10 @@ from django.conf import settings
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
 from busses_backend.busses.api.views import (
+    AsientoModelViewSet,
     BusModelViewSet,
     ChoferModelViewSet,
+    PasajeroModelViewSet,
     TrayectoModelViewSet,
 )
 # from busses_backend.busses.urls import urlpatterns as busurls
@@ -18,6 +20,8 @@ router.register("users", UserViewSet)
 router.register("trayectos", TrayectoModelViewSet)
 router.register("chofers", ChoferModelViewSet)
 router.register("buses", BusModelViewSet)
+router.register("pasajeros", PasajeroModelViewSet)
+router.register("asientos", AsientoModelViewSet)
 
 app_name = "api"
 urlpatterns = router.urls
