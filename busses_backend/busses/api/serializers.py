@@ -16,9 +16,11 @@ class PasajeroSerializer(serializers.ModelSerializer):
 
 
 class ChoferSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+
     class Meta:
         model = Chofer
-        fields = ["nombre"]
+        fields = ["id", "nombre"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -55,28 +57,23 @@ class BusSerializer(serializers.ModelSerializer):
         bus_instance = Bus.objects.create(**validated_data)
 
         if chofer:
-            chofer_instance = Chofer.objects.create(**chofer)
-            bus_instance.chofer = chofer_instance
-            bus_instance.save()
+            try:
+                obj = Chofer.objects.get(id=chofer["id"])
+                bus_instance.chofer = obj
+                bus_instance.save()
+            except Chofer.DoesNotExist:
+                chofer_instance = Chofer.objects.create(**chofer)
+                bus_instance.chofer = chofer_instance
+                bus_instance.save()
 
-        # Create seats
-        print("======= Creating seats =======")
+        # Create seats for each buss
         seats = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        seatsSerialized = []
         try:
             with transaction.atomic():
-                print("======= Before for =======")
                 for seat_number in seats:
-                    print("======= Inside for =======")
-                    seat_instance = Asiento.objects.create(
+                    Asiento.objects.create(
                         bus=bus_instance, numero=seat_number, estado="disponible"
                     )
-                    print(
-                        "======= Seat Created =======",
-                        AsientoSerializer(seat_instance).data,
-                    )
-                    seatsSerialized.append(AsientoSerializer(seat_instance).data)
-
         except DatabaseError as err:
             print(err)
 

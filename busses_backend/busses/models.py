@@ -49,6 +49,9 @@ class Asiento(models.Model):
     estado = models.CharField(max_length=20)
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f"{self.bus.id} | {self.numero} ==> {self.estado}"
+
 
 class Corrida(models.Model):
     fecha_salida = models.DateTimeField()
