@@ -1,9 +1,10 @@
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
-from ..models import Asiento, Bus, Chofer, Pasajero, Trayecto
+from ..models import Asiento, Boleto, Bus, Chofer, Pasajero, Trayecto
 from .serializers import (
     AsientoSerializer,
+    BoletoSerializer,
     BusSerializer,
     ChoferSerializer,
     PasajeroSerializer,
@@ -40,3 +41,8 @@ class PasajeroModelViewSet(viewsets.ModelViewSet):
 class AsientoModelViewSet(viewsets.ModelViewSet):
     queryset = Asiento.objects.all()
     serializer_class = AsientoSerializer
+
+
+class BoletoModelViewSet(viewsets.ModelViewSet):
+    queryset = Boleto.objects.all()
+    serializer_class = BoletoSerializer

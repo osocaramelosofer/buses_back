@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter, SimpleRouter
 
 from busses_backend.busses.api.views import (
     AsientoModelViewSet,
+    BoletoModelViewSet,
     BusModelViewSet,
     ChoferModelViewSet,
     PasajeroModelViewSet,
@@ -22,6 +23,7 @@ router.register("chofers", ChoferModelViewSet)
 router.register("buses", BusModelViewSet)
 router.register("pasajeros", PasajeroModelViewSet)
 router.register("asientos", AsientoModelViewSet)
+router.register("boletos", BoletoModelViewSet)
 
 app_name = "api"
 urlpatterns = router.urls

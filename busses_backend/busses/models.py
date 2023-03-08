@@ -28,9 +28,8 @@ class Chofer(models.Model):
 
 
 class Boleto(models.Model):
-    pasajero = models.OneToOneField("Pasajero", on_delete=models.CASCADE)
+    pasajero = models.ForeignKey("Pasajero", on_delete=models.CASCADE)
     asiento = models.OneToOneField("Asiento", on_delete=models.CASCADE)
-    # bus = models.ForeignKey('Bus', on_delete=models.CASCADE) no lo necesitas aqui
     corrida = models.ForeignKey("Corrida", on_delete=models.CASCADE)
 
     def __str__(self):

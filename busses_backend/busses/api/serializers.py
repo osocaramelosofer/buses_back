@@ -1,7 +1,7 @@
 from django.db import DatabaseError, transaction
 from rest_framework import serializers
 
-from ..models import Asiento, Bus, Chofer, Pasajero, Trayecto
+from ..models import Asiento, Boleto, Bus, Chofer, Corrida, Pasajero, Trayecto
 
 
 class PasajeroSerializer(serializers.ModelSerializer):
@@ -86,27 +86,30 @@ class AsientoSerializer(serializers.ModelSerializer):
         fields = ["bus", "numero", "estado"]
 
 
-# class RouteSerializer(serializers.ModelSerializer):
-#     bus_assignment = serializers.StringRelatedField(many=True, read_only=True)
-#
-#     class Meta:
-#         model = Route
-#         fields = [
-#             "name",
-#             "origin",
-#             "destination",
-#             "bus_assignment",
-#             "departure_date",
-#             "arrival_date",
-#         ]
-#
-#
-# class BusAssignmentSerializer(serializers.ModelSerializer):
-#     route = serializers.StringRelatedField()
-#     bus = serializers.StringRelatedField()
-#     driver = serializers.StringRelatedField()
-#     passengers = PassengerSerializer(many=True, read_only=True)
-#
-#     class Meta:
-#         model = BusAssignment
-#         fields = ["id", "route", "driver", "bus", "departure_date", "passengers", "arrival_date"]
+class BoletoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Boleto
+        fields = "__all__"
+
+    # def create(self, validated_data):
+    #     print("+++++ DATA ++++++",validated_data)
+    #     asiento = validated_data.pop('asiento')
+    #     corrida = validated_data.pop('corrida')
+    #     pasajero = validated_data.pop('pasajero')
+    #
+    #
+    #     asiento_obj = Asiento.objects.filter(pk=asiento).first()
+    #     pasajero_obj = Pasajero.objects.filter(pk=pasajero).first()
+    #     corrida_obj = Corrida.objects.filter(pk=corrida).first()
+    #
+    #
+    #     with transaction.atomic():
+    #         asiento_obj.estado = "ocupado"
+    #         asiento_obj.save()
+    #         Boleto.objects.create(asiento=asiento_obj, pasajero=pasajero_obj, corrida=corrida_obj)
+
+
+class CorridaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Corrida
+        fields = "__all__"
