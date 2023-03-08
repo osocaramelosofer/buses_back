@@ -5,9 +5,11 @@ from ..models import Asiento, Boleto, Bus, Chofer, Corrida, Pasajero, Trayecto
 
 
 class PasajeroSerializer(serializers.ModelSerializer):
+    serializers.IntegerField()
+
     class Meta:
         model = Pasajero
-        fields = ["nombre"]
+        fields = ["id", "nombre"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -86,13 +88,21 @@ class AsientoSerializer(serializers.ModelSerializer):
         fields = ["bus", "numero", "estado"]
 
 
+class CorridaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Corrida
+        fields = "__all__"
+
+
 class BoletoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Boleto
         fields = "__all__"
 
-    # def create(self, validated_data):
+    # def create(self, validated_data, **kwargs):
+    #
     #     print("+++++ DATA ++++++",validated_data)
+    #     print("=============== ARGS ===========",**kwargs)
     #     asiento = validated_data.pop('asiento')
     #     corrida = validated_data.pop('corrida')
     #     pasajero = validated_data.pop('pasajero')
@@ -107,9 +117,3 @@ class BoletoSerializer(serializers.ModelSerializer):
     #         asiento_obj.estado = "ocupado"
     #         asiento_obj.save()
     #         Boleto.objects.create(asiento=asiento_obj, pasajero=pasajero_obj, corrida=corrida_obj)
-
-
-class CorridaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Corrida
-        fields = "__all__"
