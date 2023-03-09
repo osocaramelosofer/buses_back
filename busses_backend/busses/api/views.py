@@ -76,34 +76,8 @@ class CreateBoletoGenericApiView(
     queryset = Boleto.objects.all()
 
     def get_serializer_class(self, *args, **kwargs):
-        if self.request.method == "post":
-            print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 1", self.request.method)
-            return FullBoletosSerializer
         if self.request.method == "POST":
-            print(
-                "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 2",
-                self.request.method,
-            )
             return FullBoletosSerializer
-        if self.request.method == "put":
-            print(
-                "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 3",
-                self.request.method,
-            )
-            return FullBoletosSerializer
-        if self.request.method == "PUT":
-            print(
-                "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 4",
-                self.request.method,
-            )
-            return FullBoletosSerializer
-        if self.request.action == "create":
-            print(
-                "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX 5",
-                self.request.method,
-            )
-            return FullBoletosSerializer
-        # return BoletoSerializer
         return BoletoSerializer.default
 
     def post(self, request, *args, **kwargs):
