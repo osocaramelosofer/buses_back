@@ -14,6 +14,7 @@ from .serializers import (
     FullBoletosSerializer,
     PasajeroSerializer,
     TrayectoSerializer,
+    CorridaSerializer
 )
 
 
@@ -119,3 +120,8 @@ class CreateBoletoGenericApiView(
                     "code": 500,
                 }
             )
+
+class CorridaModelViewSet(viewsets.ModelViewSet):
+    queryset = Corrida.objects.all()
+    serializer_class = CorridaSerializer
+

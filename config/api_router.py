@@ -11,6 +11,7 @@ from busses_backend.busses.api.views import (
     CreateBoletoGenericApiView,
     PasajeroModelViewSet,
     TrayectoModelViewSet,
+    CorridaModelViewSet
 )
 # from busses_backend.busses.urls import urlpatterns as busurls
 from busses_backend.users.api.views import UserViewSet
@@ -28,6 +29,7 @@ router.register("pasajeros", PasajeroModelViewSet)
 router.register("asientos", AsientoModelViewSet)
 router.register("boletos-modelviewset", BoletoModelViewSet)
 router.register("boletos-viewset", BoletoViewSet)
+router.register("corridas", CorridaModelViewSet)
 
 
 app_name = "api"
