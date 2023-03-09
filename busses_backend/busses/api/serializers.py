@@ -94,10 +94,25 @@ class CorridaSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class FullBoletosSerializer(serializers.ModelSerializer):
+    asiento = AsientoSerializer()
+    corrida = CorridaSerializer()
+    pasajero = PasajeroSerializer()
+
+    class Meta:
+        fields = ["asiento", "corrida", "pasajero"]
+        model = Boleto
+
+
 class BoletoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Boleto
         fields = "__all__"
+
+    # def to_representation(self, instance):
+    #     data = super(BoletoSerializer, self).to_representation(instance)
+    #     data["asiento"] = AsientoSerializer()
+    #     return data
 
     # def create(self, validated_data, **kwargs):
     #
