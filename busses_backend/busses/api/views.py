@@ -11,10 +11,10 @@ from .serializers import (
     BoletoSerializer,
     BusSerializer,
     ChoferSerializer,
+    CorridaSerializer,
     FullBoletosSerializer,
     PasajeroSerializer,
     TrayectoSerializer,
-    CorridaSerializer
 )
 
 
@@ -26,12 +26,12 @@ class TrayectoModelViewSet(viewsets.ModelViewSet):
 class ChoferModelViewSet(viewsets.ModelViewSet):
     queryset = Chofer.objects.all()
     serializer_class = ChoferSerializer
-    http_method_names = ["get", "delete", "put"]
+    http_method_names = ["get", "delete", "put", "post"]
 
     def destroy(self, request, *args, **kwargs):
         chofer_instance = self.get_object()
         chofer_instance.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({"data": "Conductor eliminado correctamente"}, status=status.HTTP_204_NO_CONTENT)
 
 
 class BusModelViewSet(viewsets.ModelViewSet):
@@ -121,7 +121,7 @@ class CreateBoletoGenericApiView(
                 }
             )
 
+
 class CorridaModelViewSet(viewsets.ModelViewSet):
     queryset = Corrida.objects.all()
     serializer_class = CorridaSerializer
-

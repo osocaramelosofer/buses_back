@@ -18,11 +18,11 @@ class PasajeroSerializer(serializers.ModelSerializer):
 
 
 class ChoferSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-
+    # id = serializers.IntegerField()
+    # i dont remember why i added id here i removed because when i create a new driver the request asks me an id
     class Meta:
         model = Chofer
-        fields = ["id", "nombre"]
+        fields = [ "nombre"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -43,6 +43,7 @@ class TrayectoSerializer(serializers.ModelSerializer):
 
 class BusSerializer(serializers.ModelSerializer):
     chofer = ChoferSerializer()
+    # driverId = serializers.IntegerField()
 
     class Meta:
         model = Bus
@@ -55,16 +56,20 @@ class BusSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         chofer = validated_data.pop("chofer")
+        # driver_id = validated_data.pop("driverId")
+
 
         bus_instance = Bus.objects.create(**validated_data)
-
+        print("Bus creado ======= ", bus_instance)
         if chofer:
             try:
-                obj = Chofer.objects.get(id=chofer["id"])
+                obj = Chofer.objects.get(id=1)
                 bus_instance.chofer = obj
+                print("CHOFER obtenido ======= ", bus_instance)
                 bus_instance.save()
             except Chofer.DoesNotExist:
                 chofer_instance = Chofer.objects.create(**chofer)
+                print("Chofer creado ======= ", bus_instance)
                 bus_instance.chofer = chofer_instance
                 bus_instance.save()
 

@@ -8,10 +8,10 @@ from busses_backend.busses.api.views import (
     BoletoViewSet,
     BusModelViewSet,
     ChoferModelViewSet,
+    CorridaModelViewSet,
     CreateBoletoGenericApiView,
     PasajeroModelViewSet,
     TrayectoModelViewSet,
-    CorridaModelViewSet
 )
 # from busses_backend.busses.urls import urlpatterns as busurls
 from busses_backend.users.api.views import UserViewSet
