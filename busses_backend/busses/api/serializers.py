@@ -22,7 +22,7 @@ class ChoferSerializer(serializers.ModelSerializer):
     # i dont remember why i added id here i removed because when i create a new driver the request asks me an id
     class Meta:
         model = Chofer
-        fields = [ "nombre"]
+        fields = ["nombre"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -57,7 +57,6 @@ class BusSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         chofer = validated_data.pop("chofer")
         # driver_id = validated_data.pop("driverId")
-
 
         bus_instance = Bus.objects.create(**validated_data)
         print("Bus creado ======= ", bus_instance)

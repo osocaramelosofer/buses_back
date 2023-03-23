@@ -31,7 +31,10 @@ class ChoferModelViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         chofer_instance = self.get_object()
         chofer_instance.delete()
-        return Response({"data": "Conductor eliminado correctamente"}, status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {"data": "Conductor eliminado correctamente"},
+            status=status.HTTP_204_NO_CONTENT,
+        )
 
 
 class BusModelViewSet(viewsets.ModelViewSet):
@@ -125,3 +128,40 @@ class CreateBoletoGenericApiView(
 class CorridaModelViewSet(viewsets.ModelViewSet):
     queryset = Corrida.objects.all()
     serializer_class = CorridaSerializer
+
+
+class CreateBusGenericApiView(
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.CreateModelMixin,
+    GenericAPIView,
+):
+    serializer_class = BusSerializer
+    queryset = Bus.objects.all()
+    http_method_names = ["put", "post"]
+
+
+    def put(self, request, *args, **kwargs):
+        print("Request DATA", request.data)
+        bus = request.data.pop("bus")
+        chofer = request.data.pop("chofer")
+        # print("CHOFER_ID", chofer.get("id"))
+        chofer = Chofer.objects.filter(pk=chofer.get("id")).first()
+        old_bus = Bus.objects.filter(pk=bus.get("id")).first()
+        if (chofer and old_bus):
+            with transaction.atomic():
+
+                old_bus.numero_placa = bus.get("numero_placa")
+                old_bus.capacidad = bus.get("capacidad")
+                old_bus.chofer = chofer
+                old_bus.save()
+
+        return Response(
+            {
+                "message": "Boleto comprado exitosamente.",
+                "data": "ok",
+            },
+            status=status.HTTP_201_CREATED,
+        )
+
+

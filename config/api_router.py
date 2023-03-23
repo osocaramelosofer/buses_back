@@ -12,6 +12,7 @@ from busses_backend.busses.api.views import (
     CreateBoletoGenericApiView,
     PasajeroModelViewSet,
     TrayectoModelViewSet,
+    CreateBusGenericApiView
 )
 # from busses_backend.busses.urls import urlpatterns as busurls
 from busses_backend.users.api.views import UserViewSet
@@ -33,6 +34,9 @@ router.register("corridas", CorridaModelViewSet)
 
 
 app_name = "api"
-urlpatterns = [path("crear-boleto", CreateBoletoGenericApiView.as_view())]
+urlpatterns = [
+    path("crear-boleto", CreateBoletoGenericApiView.as_view()),
+    path("crear-bus", CreateBusGenericApiView.as_view()),
+]
 urlpatterns += router.urls
 # urlpatterns += busurls
