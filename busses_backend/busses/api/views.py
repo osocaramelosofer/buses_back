@@ -148,6 +148,8 @@ class CreateBusGenericApiView(
         # print("CHOFER_ID", chofer.get("id"))
         chofer = Chofer.objects.filter(pk=chofer.get("id")).first()
         old_bus = Bus.objects.filter(pk=bus.get("id")).first()
+
+        busUpdated = None
         if (chofer and old_bus):
             with transaction.atomic():
 
@@ -155,11 +157,13 @@ class CreateBusGenericApiView(
                 old_bus.capacidad = bus.get("capacidad")
                 old_bus.chofer = chofer
                 old_bus.save()
+                busUpdated = BusSerializer(old_bus).data
+                print("bus udpated ============", busUpdated)
 
         return Response(
             {
                 "message": "Boleto comprado exitosamente.",
-                "data": "ok",
+                "bus": busUpdated,
             },
             status=status.HTTP_201_CREATED,
         )
