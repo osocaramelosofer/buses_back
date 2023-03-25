@@ -140,7 +140,6 @@ class CreateBusGenericApiView(
     queryset = Bus.objects.all()
     http_method_names = ["put", "post"]
 
-
     def put(self, request, *args, **kwargs):
         print("Request DATA", request.data)
         bus = request.data.pop("bus")
@@ -150,9 +149,8 @@ class CreateBusGenericApiView(
         old_bus = Bus.objects.filter(pk=bus.get("id")).first()
 
         busUpdated = None
-        if (chofer and old_bus):
+        if chofer and old_bus:
             with transaction.atomic():
-
                 old_bus.numero_placa = bus.get("numero_placa")
                 old_bus.capacidad = bus.get("capacidad")
                 old_bus.chofer = chofer
@@ -167,5 +165,3 @@ class CreateBusGenericApiView(
             },
             status=status.HTTP_201_CREATED,
         )
-
-
