@@ -17,6 +17,10 @@ from busses_backend.busses.api.views import (
 # from busses_backend.busses.urls import urlpatterns as busurls
 from busses_backend.users.api.views import UserViewSet
 
+
+# v2
+from busses_backend.corrida.api.views import ItemViewSet
+
 if settings.DEBUG:
     router = DefaultRouter()
 else:
@@ -32,6 +36,9 @@ router.register("boletos-modelviewset", BoletoModelViewSet)
 router.register("boletos-viewset", BoletoViewSet)
 router.register("corridas", CorridaModelViewSet)
 
+
+# v2
+router.register("corridas-vset", ItemViewSet)
 
 app_name = "api"
 urlpatterns = [

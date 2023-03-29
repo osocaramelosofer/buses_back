@@ -76,9 +76,10 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "busses_backend.users",
-    "busses_backend.busses"
     # Your stuff: custom apps go here
+    "busses_backend.users",
+    "busses_backend.busses",
+    "busses_backend.corrida",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

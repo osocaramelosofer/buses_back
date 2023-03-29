@@ -15,6 +15,7 @@ from .serializers import (
     FullBoletosSerializer,
     PasajeroSerializer,
     TrayectoSerializer,
+    FullCorridaSerializer
 )
 
 
