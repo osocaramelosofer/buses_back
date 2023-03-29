@@ -1,11 +1,11 @@
+from django.db import DatabaseError, transaction
 from django.shortcuts import get_object_or_404
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
-from rest_framework import status
-from django.db import DatabaseError, transaction
 
-from busses_backend.busses.models import Corrida, Bus, Trayecto
-
+from busses_backend.busses.models import Bus, Corrida, Trayecto
+from busses_backend.busses.api.serializers import BusSerializer
 from .serializers import ReadCorridaSerializer
 
 
@@ -13,6 +13,7 @@ class ItemViewSet(ViewSet):
     queryset = Corrida.objects.all()
 
     def list(self, request):
+        self.queryset = Corrida.objects.all()
         serializer = ReadCorridaSerializer(self.queryset, many=True)
         return Response(serializer.data)
 
@@ -22,12 +23,11 @@ class ItemViewSet(ViewSet):
         return Response(serializer.data, status=200)
 
     def put(self, request, *args, **kwargs):
-
-        bus_id = request.data.pop('bus')
-        trayecto_id = request.data.pop('trayecto')
-        corrida_id = request.data.pop('id')
-        fecha_salida = request.data.pop('fecha_salida')
-        fecha_llegada = request.data.pop('fecha_llegada')
+        bus_id = request.data.pop("bus")
+        trayecto_id = request.data.pop("trayecto")
+        corrida_id = request.data.pop("id")
+        fecha_salida = request.data.pop("fecha_salida")
+        fecha_llegada = request.data.pop("fecha_llegada")
 
         updated_bus = Bus.objects.filter(pk=bus_id).first()
         updated_trayecto = Trayecto.objects.filter(pk=trayecto_id).first()
@@ -35,6 +35,7 @@ class ItemViewSet(ViewSet):
 
         if current_corrida:
             with transaction.atomic():
+                print("Bus Serialiizado =>",BusSerializer(updated_bus).data)
                 current_corrida.bus = updated_bus
                 current_corrida.trayecto = updated_trayecto
                 current_corrida.fecha_salida = fecha_salida
