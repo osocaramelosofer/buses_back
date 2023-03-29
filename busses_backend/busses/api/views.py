@@ -13,9 +13,9 @@ from .serializers import (
     ChoferSerializer,
     CorridaSerializer,
     FullBoletosSerializer,
+    FullCorridaSerializer,
     PasajeroSerializer,
     TrayectoSerializer,
-    FullCorridaSerializer
 )
 
 

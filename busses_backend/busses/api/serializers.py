@@ -97,14 +97,12 @@ class CorridaSerializer(serializers.ModelSerializer):
         model = Corrida
         fields = "__all__"
 
+
 # I use this fullCorridaSerializer to hettp get to retrieve all info with trayectos and bus
 class FullCorridaSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Corrida
         fields = "__all__"
-
-
 
 
 class FullBoletosSerializer(serializers.ModelSerializer):

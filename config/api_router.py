@@ -10,16 +10,14 @@ from busses_backend.busses.api.views import (
     ChoferModelViewSet,
     CorridaModelViewSet,
     CreateBoletoGenericApiView,
+    CreateBusGenericApiView,
     PasajeroModelViewSet,
     TrayectoModelViewSet,
-    CreateBusGenericApiView
 )
-# from busses_backend.busses.urls import urlpatterns as busurls
-from busses_backend.users.api.views import UserViewSet
-
-
 # v2
 from busses_backend.corrida.api.views import ItemViewSet
+# from busses_backend.busses.urls import urlpatterns as busurls
+from busses_backend.users.api.views import UserViewSet
 
 if settings.DEBUG:
     router = DefaultRouter()
