@@ -16,6 +16,7 @@ from busses_backend.busses.api.views import (
 )
 # v2
 from busses_backend.corrida.api.views import ItemViewSet
+from busses_backend.boletos.api.views import AsientosViewSet
 # from busses_backend.busses.urls import urlpatterns as busurls
 from busses_backend.users.api.views import UserViewSet
 
@@ -37,6 +38,7 @@ router.register("corridas", CorridaModelViewSet)
 
 # v2
 router.register("corridas-vset", ItemViewSet)
+router.register("asientos-vset", AsientosViewSet)
 
 app_name = "api"
 urlpatterns = [
